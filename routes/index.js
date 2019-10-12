@@ -9,6 +9,7 @@ module.exports = () => {
 
   // Categorias
   router.get("/categoria", categoriaController.mostrarCategorias);
+  router.get("/categoria/nueva", categoriaController.formularioNuevaCategoria);
 
   return router;
 };
