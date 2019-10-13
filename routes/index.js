@@ -9,8 +9,12 @@ module.exports = () => {
 
   // Categorias
   router.get("/categoria", categoriaController.mostrarCategorias);
+  router.get("/categoria/categoria", categoriaController.mostrarCategoria);
   router.get("/categoria/nueva", categoriaController.formularioNuevaCategoria);
-  router.post("/categoria/nueva", categoriaController.agregarCategoria);
+
+  router.post("/categoria/agregar", categoriaController.agregarCategoria);
+  router.post("/categoria/editar/:url", categoriaController.editarCategoria);
+  router.post("/categoria/eliminar", categoriaController.eliminarCategoria);
 
   return router;
 };

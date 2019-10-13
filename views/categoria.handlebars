@@ -30,7 +30,7 @@
                     {{!-- Card body --}}
                     <div class="card-body">
                         {{!-- Lista de categorías  --}}
-                        <ul class="list-group list-group-flush list my--3">
+                        <ul id="lista-cat" class="list-group list-group-flush list my--3">
                             {{#each categoria}}
                             <li class="list-group-item px-0">
                                 <div class="row align-items-center">
@@ -50,14 +50,16 @@
                                     </div>
                                     {{!-- Botón editar --}}
                                     <div class="col-auto">
-                                        <button class="btn btn-icon btn-outline-info btn-sm btn-primary" type="button">
+                                        <button data-id={{url}} name='cat-editar'
+                                            class="btn btn-icon btn-outline-info btn-sm btn-primary" type="button">
                                             <span class="btn-inner--icon"><i class="ni ni-ruler-pencil"></i></span>
                                             <span class="btn-inner--text">Editar</span>
                                         </button>
                                     </div>
                                     {{!-- Botón eliminar --}}
                                     <div class="col-auto">
-                                        <button class="btn btn-icon btn-danger btn-sm btn-primary" type="button">
+                                        <button data-id={{url}} name='cat-eliminar'
+                                            class="btn btn-icon btn-danger btn-sm btn-primary" type="button">
                                             <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
                                             <span class="btn-inner--text">Eliminar</span>
                                         </button>
@@ -71,4 +73,75 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modal-delete-categoria">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar Categoría</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+
+                <div id="sure" class="form-group">
+                    <center>
+                        <p>¿Esta seguro que desea eliminar la categoría?</p>
+                    </center>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="/categoria/eliminar" method="post">
+                    <input id="contenedor-id" style="display:none" class="form-control" type="text" name="url">
+
+                    <input id='btn-del-categoria' type="submit" value="Eliminar" class="btn btn-danger">
+                </form>
+                <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                        class="fa fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-editar-categoria">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Categoría</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <form id="form-editar" action="/categoria/editar" method="post">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-md-3 col-form-label form-control-label">Nombre</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" id="txt-nombre" name="nombre"
+                                placeholder="Nombre de categoría" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="exampleFormControlTextarea1">Descripción</label>
+                        <textarea id="txt-descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            name="descripcion" required></textarea>
+                    </div>
+
+                    {{!-- <button class="btn btn-primary" type="submit">Crear</button> --}}
+
+                    <input type="submit" value="Guardar" class="btn btn-success">
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                        class="fa fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
