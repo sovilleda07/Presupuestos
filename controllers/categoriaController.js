@@ -13,6 +13,19 @@ exports.mostrarCategorias = async (req, res, next) => {
   });
 };
 
+exports.listarCategorias = async (req, res, next) => {
+  const categoria = await Categoria.find({ estado: "1" });
+  //console.log(categoria);
+
+  // Si no hay resultados
+
+  if (!categoria) {
+    return next();
+  } else {
+    return res.status(200).send(categoria);
+  }
+};
+
 exports.mostrarCategoria = async (req, res, next) => {
   const categoria = await Categoria.findOne({ url: req.query.url });
   //console.log(req.query);
