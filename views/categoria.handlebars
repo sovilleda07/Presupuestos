@@ -31,6 +31,7 @@
                     <div class="card-body">
                         {{!-- Lista de categorías  --}}
                         <ul class="list-group list-group-flush list my--3">
+                            {{#each categoria}}
                             <li class="list-group-item px-0">
                                 <div class="row align-items-center">
                                     {{!-- Imagen --}}
@@ -42,10 +43,10 @@
                                     {{!-- Nombre --}}
                                     <div class="col ml--2">
                                         <h4 class="heading mb-0">
-                                            <a href="">Universidad</a>
+                                            <a href="">{{nombre}}</a>
                                         </h4>
                                         <span class="text-success">●</span>
-                                        <small>Online</small>
+                                        <small>{{descripcion}}</small>
                                     </div>
                                     {{!-- Botón editar --}}
                                     <div class="col-auto">
@@ -63,38 +64,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    {{!-- Imagen --}}
-                                    <div class="col-auto">
-                                        <a href="#" class="avatar rounded-circle">
-                                            <img alt="Image" src="../../assets/img/theme/team-1.jpg">
-                                        </a>
-                                    </div>
-                                    {{!-- Nombre --}}
-                                    <div class="col ml--2">
-                                        <h4 class="heading mb-0">
-                                            <a href="">Comida</a>
-                                        </h4>
-                                        <span class="text-success">●</span>
-                                        <small>Online</small>
-                                    </div>
-                                    {{!-- Botón editar --}}
-                                    <div class="col-auto">
-                                        <button class="btn btn-icon btn-outline-info btn-sm btn-primary" type="button">
-                                            <span class="btn-inner--icon"><i class="ni ni-ruler-pencil"></i></span>
-                                            <span class="btn-inner--text">Editar</span>
-                                        </button>
-                                    </div>
-                                    {{!-- Botón eliminar --}}
-                                    <div class="col-auto">
-                                        <button class="btn btn-icon btn-danger btn-sm btn-primary" type="button">
-                                            <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
-                                            <span class="btn-inner--text">Eliminar</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
+                            {{/each}}
                         </ul>
                     </div>
                 </div>

@@ -1,17 +1,22 @@
+const mongoose = require("mongoose");
+require("./config/db");
 const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require("path");
 const router = require("./routes/index");
-const mongoose = require("mongoose");
-require("./config/db");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const bodyParser = require("body-parser");
 
 // Habilitando el archivo de variables de entorno
 require("dotenv").config({ path: "variables.env" });
 
 const app = express();
+
+// Habilitar body-parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Habilitar Handlebars como Template Engine
 app.engine(
@@ -28,6 +33,8 @@ app.set("view engine", "handlebars");
 app.use(express.static(path.join(__dirname, "public")));
 
 // Creación de la sesión y de la cookie
+app.use(cookieParser());
+
 app.use(
   session({
     secret: process.env.SECRET,

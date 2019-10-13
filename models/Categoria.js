@@ -19,9 +19,6 @@ const categoriaSchema = new mongoose.Schema({
     default: 1,
     trim: true
   },
-  ultimaModificación: {
-    type: Date
-  },
   url: {
     type: String,
     lowercase: true
