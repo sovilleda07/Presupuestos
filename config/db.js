@@ -13,3 +13,4 @@ mongoose.connection.on("error", error => {
 
 // Importando los modelos
 require("../models/Categoria");
+require("../models/Gasto");

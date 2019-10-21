@@ -1,0 +1,384 @@
+{{!-- Contenido de daashboard --}}
+
+{{!-- Llamado a partial que contiene el menú lateral --}}
+{{> navDashboard }}
+
+{{!-- Contenido de la página --}}
+<div class="main-content" id="panel">
+    {{!-- Llamado a partial que contiene la barra superior --}}
+    {{> topnav }}
+
+    {{!-- Contenido de cada opción dentro del dashboard --}}
+    <div class="container-fluid mt-4">
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-0">Gastos de la categoría</h3>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="#" class="btn btn-sm btn-primary btn-round btn-icon" data-toggle="tooltip"
+                            data-original-title="Agregar un gasto">
+                            <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                            <span class="btn-inner--text">Agregar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive py-4">
+                {{!-- <table id="tablaGastos" class="table table-flush" id="datatable-basic">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Mes</th>
+                            <th>Año</th>
+                            <th>Monto</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- Nombre -->
+                            <td class="table-user">
+                                <b>Pago de luz</b>
+                            </td>
+                            <!-- Descripción -->
+                            <td>Pago de luz del mes de Octubre</td>
+                            <!-- Mes -->
+                            <td>Octubre</td>
+                            <!-- Año -->
+                            <td>2019</td>
+                            <!-- Monto -->
+                            <td>L. 2,000.00</td>
+                            <!-- Acciones -->
+                            <td class="table-actions">
+     
+                                <a href="#!" class="table-action" data-toggle="tooltip"
+                                    data-original-title="Editar gastp">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#!" class="table-action table-action-delete" data-toggle="tooltip"
+                                    data-original-title="Eliminar gasto">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table> --}}
+                <table id="tablaCategorias" class="table table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{!-- <tr>
+                            
+                            <td class="table-actions">
+
+                                <a href="#!" class="table-action" data-toggle="tooltip"
+                                    data-original-title="Editar gastp">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#!" class="table-action table-action-delete" data-toggle="tooltip"
+                                    data-original-title="Eliminar gasto">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr> --}}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{!-- Tarjeta de Gastos --}}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {{!-- Lista de Gastos por categoría --}}
+                <div class="card" id="gastos">
+                    {{!-- Card Header --}}
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <!-- Title -->
+                                <h5 class="h3 mb-0">Gastos</h5>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button name="gasto-agregar" class="btn btn-neutral">
+                                    Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- Card body --}}
+                    <div class="card-body">
+                        {{!-- Lista de Gastos por categoría --}}
+                        <ul id="lista-gastos" class="list-group list-group-flush list my--3">
+                            {{#each categoria}}
+                            <li class="list-group-item px-0">
+                                <div class="row align-items-center">
+                                    {{!-- Imagen --}}
+                                    <div class="col-auto">
+                                        <a href="#" class="avatar rounded-circle">
+                                            <img alt="Image" src="../../assets/img/theme/team-1.jpg">
+                                        </a>
+                                    </div>
+                                    {{!-- Nombre --}}
+                                    <div class="col ml--2">
+                                        <h4 class="heading mb-0">
+                                            <a href="">{{nombre}}</a>
+                                        </h4>
+                                        <span class="text-success">●</span>
+                                        <small>{{descripcion}}</small>
+                                    </div>
+                                    {{!-- Botón editar --}}
+                                    <div class="col-auto">
+                                        <button data-id={{url}} name='gasto-editar'
+                                            class="btn btn-icon btn-outline-info btn-sm btn-primary" type="button">
+                                            <span class="btn-inner--icon"><i class="ni ni-ruler-pencil"></i></span>
+                                            <span class="btn-inner--text">Editar</span>
+                                        </button>
+                                    </div>
+                                    {{!-- Botón eliminar --}}
+                                    <div class="col-auto">
+                                        <button data-id={{url}} name='gasto-eliminar'
+                                            class="btn btn-icon btn-danger btn-sm btn-primary" type="button">
+                                            <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                                            <span class="btn-inner--text">Eliminar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal para agregar gasto --}}
+<div class="modal fade" id="modal-agregar-gasto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar gasto</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                {{!-- Formulario --}}
+                <form id="form-agregar" action="/gasto/agregar" method="post">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-md-3 col-form-label form-control-label">Nombre</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="nombre" id="txt-nombre-gasto"
+                                placeholder="Nombre del gasto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="descripcion">Descripción</label>
+                        <textarea id="txt-descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            name="descripcion" placeholder="Ingresa un descripción del gasto" required></textarea>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="monto" <label for="nombre"
+                            class="col-md-3 col-form-label form-control-label">Monto</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="number" name="monto" placeholder="0" step="0.01" min="0"
+                                pattern="^[0-9]" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="categoria" class="col-md-3 col-form-label form-control-label">Categoría</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_categorias" name="categoria" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="mes" class="col-md-3 col-form-label form-control-label">Mes</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_mes" name="mes" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="enero">Enero</option>
+                                <option value="febrero">Febrero</option>
+                                <option value="marzo">Marzo</option>
+                                <option value="abril">Abril</option>
+                                <option value="mayo">Mayo</option>
+                                <option value="junio">Junio</option>
+                                <option value="julio">Julio</option>
+                                <option value="agosto">Agosto</option>
+                                <option value="septiembre">Septiembre</option>
+                                <option value="octubre">Octubre</option>
+                                <option value="noviembre">Noviembre</option>
+                                <option value="diciembre">Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="anio" class="col-md-3 col-form-label form-control-label">Año</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_anio" name="anio" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group row">
+                            <input type="submit" value="Guardar" class="btn btn-success align-items-center">
+                            <button type="button" id="btn-cancelar-gasto" class="btn btn-default"
+                                data-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+{{!-- Modal para eliminar gasto --}}
+<div class="modal fade" id="modal-delete-gasto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar gasto</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+
+                <div id="sure" class="form-group">
+                    <center>
+                        <p>¿Esta seguro que desea eliminar el gasto?</p>
+                    </center>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="/gasto/eliminar" method="post">
+                    <input id="contenedor-id-gasto" style="display:none" class="form-control" type="text" name="url">
+
+                    <input id='btn-del-categoria' type="submit" value="Eliminar" class="btn btn-danger">
+                </form>
+                <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                        class="fa fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+{{!-- Modal para editar gasto --}}
+<div class="modal fade" id="modal-editar-gasto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar gasto</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                {{!-- Formulario --}}
+                <form id="form-editar" action="/gasto/editar" method="post">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-md-3 col-form-label form-control-label">Nombre</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="nombre" id="txt-nombre-gasto"
+                                placeholder="Nombre del gasto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="exampleFormControlTextarea1">Descripción</label>
+                        <textarea id="txt-descripcion-gasto" class="form-control" id="exampleFormControlTextarea1"
+                            rows="3" name="descripcion" required></textarea>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="monto" <label for="nombre"
+                            class="col-md-3 col-form-label form-control-label">Monto</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="number" name="monto" placeholder="0" step="0.01" min="0"
+                                pattern="^[0-9]" id="txt-monto-gasto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="categoria" class="col-md-3 col-form-label form-control-label">Categoría</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_categorias" name="categoria" required></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="mes" class="col-md-3 col-form-label form-control-label">Mes</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_meses" name="meses" required>
+                                <option>Enero</option>
+                                <option>Febrero</option>
+                                <option>Marzo</option>
+                                <option>Abril</option>
+                                <option>Mayo</option>
+                                <option>Junio</option>
+                                <option>Julio</option>
+                                <option>Agosto</option>
+                                <option>Septiembre</option>
+                                <option>Octubre</option>
+                                <option>Noviembre</option>
+                                <option>Diciembre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="mes" class="col-md-3 col-form-label form-control-label">Año</label>
+                        <div class="col-md-9">
+                            <select class="form-control" id="cbx_anio" name="anio" required>
+                                <option>2019</option>
+                                <option>2020</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group row">
+                            <input type="submit" value="Guardar" class="btn btn-success">
+                            <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                                    class="fa fa-ban"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const homeController = require("../controllers/homeController");
 const categoriaController = require("../controllers/categoriaController");
+const gastoController = require("../controllers/gastoController");
 
 module.exports = () => {
   // Página principal
@@ -16,6 +17,10 @@ module.exports = () => {
   router.post("/categoria/agregar", categoriaController.agregarCategoria);
   router.post("/categoria/editar/:url", categoriaController.editarCategoria);
   router.post("/categoria/eliminar", categoriaController.eliminarCategoria);
+
+  // Gastos
+  router.get("/gasto", gastoController.mostrarGasto);
+  router.post("/gasto/agregar", gastoController.agregarGasto);
 
   return router;
 };
