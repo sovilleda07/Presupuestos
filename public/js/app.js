@@ -1,8 +1,8 @@
 $(document).ready(function() {
   var id_categoria = "";
+  var id_gasto = "";
 
-  // $("#tablaGastos").DataTable();
-
+  // Llamar a la función para cargar las tablas de los gastos
   cargarTablaGastos();
 
   // Accedemos a los botones de la lista que contiene
@@ -16,7 +16,6 @@ $(document).ready(function() {
 
     if (accion == "cat-editar") {
       getCategoria();
-      // getComboCategorias();
 
       let form_url = "/categoria/editar/" + id_categoria;
 
@@ -50,14 +49,12 @@ $(document).ready(function() {
     });
   }
 
+  // Función para cargar la tabla con los datos de los gastos generales
   function cargarTablaGastos() {
-    let url = "http://localhost:8000/categoria/listar";
+    let url = `${location.origin}/gasto/listar`;
     $.ajax({
       url: url,
       success: function(respuesta) {
-        //console.log(respuesta);
-        // $("#txt-nombre").val(respuesta.nombre);
-        // $("#txt-descripcion").val(respuesta.descripcion);
         var columns = [
           {
             mDataProp: "nombre",
@@ -65,6 +62,22 @@ $(document).ready(function() {
           },
           {
             mDataProp: "descripcion",
+            className: "text-center"
+          },
+          {
+            mDataProp: "categoria",
+            className: "text-center"
+          },
+          {
+            mDataProp: "monto",
+            className: "text-center"
+          },
+          {
+            mDataProp: "mes",
+            className: "text-center"
+          },
+          {
+            mDataProp: "anio",
             className: "text-center"
           },
           {
@@ -86,7 +99,7 @@ $(document).ready(function() {
           }
         ];
 
-        CargarDataTable("#tablaCategorias", respuesta, columns);
+        CargarDataTable("#tablaGastos", respuesta, columns);
       },
       error: function() {
         console.log("No se ha podido obtener la información");
@@ -96,7 +109,7 @@ $(document).ready(function() {
 
   // Función para obtener las categorías existentes y cargarlas en un combobox
   function getComboCategorias() {
-    let url = "http://localhost:8000/categoria/listar";
+    let url = `${location.origin}/categoria/listar`;
     $.ajax({
       url: url,
       success: function(respuesta) {
@@ -117,67 +130,113 @@ $(document).ready(function() {
     });
   }
 
-  // GASTOS
-  // LLamos a todos los botones que pertenecen a card
+  // ------------------------------------------------------- GASTOS -------------------------------------------------------
+  // LLamos a todos los botones que hay en el container
   $("#gastos").on("click", "button", function() {
-    // Obtenemos el url que trae el botón
-    var url = $(this).attr("data-id");
     // Obtenemos cual será la opción a realizar
     var accion = $(this).attr("name");
-    id_categoria = url;
 
     // Dependiendo del botón al que se le hace click
     // se realizará una acción transmitida por el atributo name
+    // En este caso es la acción de agregar, por lo tanto se desplegará el modal correspondiente
     if (accion == "gasto-agregar") {
+      // Cargamos las categorías correspondientes
       getComboCategorias();
+      // Desplegamos el modal
       $("#modal-agregar-gasto").modal();
-    } else if (accion == "gasto-editar") {
-      $("#modal-editar-gasto").modal();
-    } else if (accion == "gasto-eliminar") {
-      $("contenedor-id-gasto").val(url);
-      $("#modal-delete-gasto").modal();
     }
-
-    // if (accion == "cat-editar") {
-    //   getCategoria();
-    //   getComboCategorias();
-
-    //   let form_url = "/categoria/editar/" + id_categoria;
-
-    //   $("#form-editar").attr("action", form_url);
-    //   $("#modal-editar-categoria").modal();
-    // }
   });
 
-  $("#tablaCategorias").on("click", "span", function() {
+  // Acciones de los botones en la tabla de gastos
+  $("#tablaGastos").on("click", "span", function() {
     // Obtenemos el url que trae el botón
     var url = $(this).attr("data-id");
     // Obtenemos cual será la opción a realizar
     var accion = $(this).attr("name");
-    id_categoria = url;
+    id_gasto = url;
 
     // Dependiendo del botón al que se le hace click
     // se realizará una acción transmitida por el atributo name
     if (accion == "gasto-editar") {
+      // Llamos a la función que hace la petición
+      getGasto();
+
+      // Creamos una variable para poder modificar el action del formulario
+      // con la url del gasto seleccionado
+      let form_url = "/gasto/editar" + id_gasto;
+      $("#form-editar-gasto").attr("action", form_url);
+
+      // Desplegar el modal
       $("#modal-editar-gasto").modal();
-      alert(accion + url);
     } else if (accion == "gasto-eliminar") {
-      alert(accion + url);
+      alert(url);
       $("contenedor-id-gasto").val(url);
       $("#modal-delete-gasto").modal();
     }
-
-    // if (accion == "cat-editar") {
-    //   getCategoria();
-    //   getComboCategorias();
-
-    //   let form_url = "/categoria/editar/" + id_categoria;
-
-    //   $("#form-editar").attr("action", form_url);
-    //   $("#modal-editar-categoria").modal();
-    // }
   });
 
+  // Función para obtener la información de un gasto
+  // Y colocarla en el formulario en el modal
+  function getGasto() {
+    let url = `${location.origin}/gasto/listarGasto?url=${id_gasto}`;
+
+    $.ajax({
+      url: url,
+      success: function(respuesta) {
+        console.log(respuesta);
+        // Enviar a función el nombre de la categoría para seleccionarla
+        getComboCategoriaGasto(respuesta.categoria);
+        $("#txt-gasto-nombre").val(respuesta.nombre);
+        $("#txt-descripcion-gasto").val(respuesta.descripcion);
+        $("#txt-monto-gasto").val(respuesta.monto);
+        $("#cbx_mes-gasto").val(respuesta.mes);
+        $("#cbx_anio-gasto").val(respuesta.anio);
+      },
+      error: function() {
+        console.log("No se ha podido obtener la información");
+      }
+    });
+  }
+
+  // $("#cbx_mes-gasto").change(function() {
+  //   alert($("#cbx_mes-gasto").val());
+  // });
+
+  // Función para obtener las categorías existentes y
+  // seleccionar la que trae el registro del gasto
+  function getComboCategoriaGasto(categoriaSeleccionada) {
+    let url = `${location.origin}/categoria/listar`;
+    $.ajax({
+      url: url,
+      success: function(respuesta) {
+        //console.log(respuesta);
+        $("#cbx_categorias-gasto").empty();
+        $.each(respuesta, function(i, item) {
+          if (categoriaSeleccionada === item.nombre) {
+            $("#cbx_categorias-gasto").append(
+              $("<option>", {
+                value: item["nombre"],
+                text: item["nombre"],
+                selected: true
+              })
+            );
+          } else {
+            $("#cbx_categorias-gasto").append(
+              $("<option>", {
+                value: item["nombre"],
+                text: item["nombre"]
+              })
+            );
+          }
+        });
+      },
+      error: function() {
+        console.log("No se ha podido obtener la información");
+      }
+    });
+  }
+
+  // Función del plugin para cargar los datos
   function CargarDataTable(tableID, data, columns) {
     $(tableID)
       .dataTable()

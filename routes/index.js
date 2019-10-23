@@ -19,8 +19,10 @@ module.exports = () => {
   router.post("/categoria/eliminar", categoriaController.eliminarCategoria);
 
   // Gastos
-  router.get("/gasto", gastoController.mostrarGasto);
+  router.get("/gasto", gastoController.mostrarGastos);
   router.post("/gasto/agregar", gastoController.agregarGasto);
+  router.get("/gasto/listar", gastoController.listarGastos);
+  router.get("/gasto/listarGasto", gastoController.mostrarGasto);
 
   return router;
 };
