@@ -1,6 +1,7 @@
 $(document).ready(function() {
   var id_categoria = "";
   var id_gasto = "";
+  //alertify.success("hola");
 
   // Llamar a la función para cargar las tablas de los gastos
   cargarTablaGastos();
@@ -27,10 +28,10 @@ $(document).ready(function() {
     }
   });
 
-  $("btn-guardar-cat").click(function() {
-    let url = "/categoria/editar/" + id_categoria;
-    $("#form-editar").attr("action", url);
-  });
+  // $("btn-guardar-cat").click(function() {
+  //   let url = "/categoria/editar/" + id_categoria;
+  //   $("#form-editar").attr("action", url);
+  // });
 
   // Función para obtener la información de las categorías
   // Y colocarla en el formulario en el modal
@@ -163,13 +164,13 @@ $(document).ready(function() {
 
       // Creamos una variable para poder modificar el action del formulario
       // con la url del gasto seleccionado
-      let form_url = "/gasto/editar" + id_gasto;
+      let form_url = "/gasto/editar/" + id_gasto;
       $("#form-editar-gasto").attr("action", form_url);
 
       // Desplegar el modal
       $("#modal-editar-gasto").modal();
     } else if (accion == "gasto-eliminar") {
-      alert(url);
+      //alert(url);
       $("contenedor-id-gasto").val(url);
       $("#modal-delete-gasto").modal();
     }
@@ -235,6 +236,24 @@ $(document).ready(function() {
       }
     });
   }
+
+  // Acción del boton eliminar para realizar la petición
+  $("#btn-gasto-eliminar").click(function() {
+    let url = "http://localhost:8000/gasto/eliminar/" + id_gasto;
+    $.ajax({
+      url: url,
+      // indicamos el tipo de petición
+      type: "DELETE",
+      success: function(respuesta) {
+        alertify.success("Se eliminó el gasto correctamente.");
+        // Recargamos la tabla de los gastos
+        cargarTablaGastos();
+      },
+      error: function(request, msg, error) {
+        alertify.success("No se pudo eliminar el gasto.");
+      }
+    });
+  });
 
   // Función del plugin para cargar los datos
   function CargarDataTable(tableID, data, columns) {

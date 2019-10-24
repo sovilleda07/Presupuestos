@@ -43,3 +43,31 @@ exports.mostrarGasto = async (req, res, next) => {
     return res.status(200).send(gasto);
   }
 };
+
+// Editar el gasto
+exports.editarGasto = async (req, res) => {
+  const gastoEditado = req.body;
+  //console.log(gastoEditado);
+
+  // Cambiar el gasto
+  const gasto = await Gasto.findOneAndUpdate(
+    { url: req.params.url },
+    gastoEditado,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+
+  res.redirect("/gasto");
+};
+
+// Eliminar el gasto
+exports.eliminarGasto = async (req, res) => {
+  // Obtener el id del gasto
+  const id = req.params.url;
+  //console.log(req.body);
+  const gasto = await Gasto.findOneAndDelete({ url: id });
+
+  return res.status(200).send({ resultado: "Exito" });
+};
