@@ -33,9 +33,9 @@ module.exports = () => {
   // Usuario
   router.get("/crearCuenta", usuarioController.formularioNuevaCuenta);
   router.post(
-    "/crearCuenta/nuevaCuenta",
+    "/crearCuenta",
     [
-      // Verificamos los atributos del formulario
+      // Verficar los atributos del formulario
       check("nombre", "El nombre de usuario es requerido.")
         .not()
         .isEmpty()
@@ -45,7 +45,23 @@ module.exports = () => {
         .isEmpty(),
       check("email", "El correo electrónico no es válido.")
         .isEmail()
-        .normalizeEmail()
+        .normalizeEmail(),
+      check("password", "La contraseña es requerida.")
+        .not()
+        .isEmpty(),
+      check(
+        "confirmpassword",
+        "Debe ingresar la confirmación de tu contraseña."
+      )
+        .not()
+        .isEmpty(),
+      check(
+        "confirmpassword",
+        "La confirmación de la contraseña no coincide con tu contraseña."
+      ).custom((value, { req }) => value === req.body.password),
+      check("sueldo", "El sueldo del usuaro es requerido.")
+        .not()
+        .isEmpty()
     ],
     usuarioController.agregarUsuario
   );

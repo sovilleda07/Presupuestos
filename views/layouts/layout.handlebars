@@ -34,7 +34,15 @@
 
 <body>
     {{!-- Aquí va ir el contenido de las demás páginas --}}
-    {{{body}}}
+    <div class="contenido-principal contenedor">
+        {{#if messages}}
+        <div class="alertas">
+            {{#mostrarAlertas messages}}
+            {{/mostrarAlertas}}
+        </div>
+        {{/if}}
+        {{{body}}}
+    </div>
 
     {{!-- Argon Scripts --}}
     {{!-- Core --}}

@@ -24,7 +24,8 @@ app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "layout",
-    partialsDir: __dirname + "/views/partials/"
+    partialsDir: __dirname + "/views/partials/",
+    helpers: require("./helpers/handlebars")
   })
 );
 

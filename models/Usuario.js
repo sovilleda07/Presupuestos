@@ -4,7 +4,7 @@ const slug = require("slug");
 const shortid = require("shortid");
 const bcrypt = require("bcrypt");
 
-// Definición del schema
+// Defición del schema
 const usuarioSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -24,8 +24,7 @@ const usuarioSchema = new mongoose.Schema({
   },
   sueldo: {
     type: String,
-    default: 0,
-    required: "El sueldo del usuario es requerido.",
+    required: true,
     trim: true
   },
   url: {
@@ -36,18 +35,21 @@ const usuarioSchema = new mongoose.Schema({
   expira: Date
 });
 
-// Middleware para generar el url
+// Middleware para crear url
 usuarioSchema.pre("save", function(next) {
   // Crear la URL
   const url = slug(this.nombre);
   this.url = `${url}-${shortid.generate()}`;
+  //console.log(this.url);
+
+  next();
 });
 
-// Hooks (método) para hash + salt password
+// Middleware para hash + salt password
 usuarioSchema.pre("save", function(next) {
   const user = this;
 
-  // Si el password ya fué modificado (ya hasheado)
+  // Si el password ya fue modificado (ya hasheado)
   if (!user.isModified("password")) {
     return next();
   }
@@ -64,9 +66,10 @@ usuarioSchema.pre("save", function(next) {
       if (err) return next(err);
 
       user.password = hash;
+      //console.log(user.password);
+
       next();
     });
   });
 });
-
 module.exports = mongoose.model("Usuario", usuarioSchema);
