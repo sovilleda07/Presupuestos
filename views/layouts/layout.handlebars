@@ -34,15 +34,16 @@
 
 <body>
     {{!-- Aquí va ir el contenido de las demás páginas --}}
-    <div class="contenido-principal contenedor">
+
+    {{{body}}}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{#if messages}}
-        <div class="alertas">
-            {{#mostrarAlertas messages}}
-            {{/mostrarAlertas}}
-        </div>
+        <span class="alert-icon"><i class="ni ni-bell-55"></i></span>
+        {{#mostrarAlertas messages}}
+        {{/mostrarAlertas}}
         {{/if}}
-        {{{body}}}
     </div>
+
 
     {{!-- Argon Scripts --}}
     {{!-- Core --}}

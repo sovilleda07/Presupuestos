@@ -5,7 +5,10 @@ module.exports = {
     let html = "";
     if (categoria.length) {
       errors[categoria].forEach(error => {
-        html += `<div class="${categoria} alerta">${error}</div>`;
+        html +=
+          `<span class="alert-text"><strong>¡ERROR!</strong> ${error}</span>` +
+          `<button type="button" class="close" data-dismiss="alert" aria-label="Close">` +
+          `<span aria-hidden="true">&times;</span>`;
       });
     }
     return (alerts.fn().html = html);
