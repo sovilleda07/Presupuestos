@@ -37,7 +37,7 @@ exports.agregarUsuario = async (req, res, next) => {
   try {
     // Almacenar en la base de datos
     const nuevoUsuario = await usuario.save();
-    res.redirect("/");
+    res.redirect("iniciarSesion");
     //console.log("Se guardó el usuario");
   } catch (error) {
     // Ingresar el error al arreglo de errores
@@ -49,4 +49,8 @@ exports.agregarUsuario = async (req, res, next) => {
       messages: req.flash()
     });
   }
+};
+
+exports.formularioIniciarSesion = (req, res) => {
+  res.render("iniciarSesion");
 };

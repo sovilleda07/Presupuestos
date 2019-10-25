@@ -36,8 +36,9 @@
     {{!-- Aquí va ir el contenido de las demás páginas --}}
 
     {{{body}}}
+
+    {{#if messages}}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{#if messages}}
         <span class="alert-icon"><i class="ni ni-bell-55"></i></span>
         {{#mostrarAlertas messages}}
         {{/mostrarAlertas}}

@@ -12,6 +12,9 @@ exports.agregarGasto = async (req, res) => {
 
   // console.log(gasto);
 
+  // Agregando el usuario que crea el gasto
+  gasto.autor = req.user._id;
+
   // Almacenar en la base de datos
   const nuevoGasto = await gasto.save();
 

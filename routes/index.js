@@ -5,6 +5,7 @@ const homeController = require("../controllers/homeController");
 const categoriaController = require("../controllers/categoriaController");
 const gastoController = require("../controllers/gastoController");
 const usuarioController = require("../controllers/usuarioController");
+const authController = require("../controllers/authController");
 
 module.exports = () => {
   // Página principal
@@ -31,6 +32,7 @@ module.exports = () => {
   router.delete("/gasto/eliminar/:url", gastoController.eliminarGasto);
 
   // Usuario
+  // Crear usuario
   router.get("/crearCuenta", usuarioController.formularioNuevaCuenta);
   router.post(
     "/crearCuenta",
@@ -65,6 +67,10 @@ module.exports = () => {
     ],
     usuarioController.agregarUsuario
   );
+
+  // Iniciar sesión
+  router.get("/iniciarSesion", usuarioController.formularioIniciarSesion);
+  router.post("/iniciarSesion", authController.autenticarUsuario);
 
   return router;
 };
