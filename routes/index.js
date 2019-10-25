@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const { check } = require("express-validator");
 const homeController = require("../controllers/homeController");
 const categoriaController = require("../controllers/categoriaController");
 const gastoController = require("../controllers/gastoController");
+const usuarioController = require("../controllers/usuarioController");
 
 module.exports = () => {
   // Página principal
@@ -27,6 +29,26 @@ module.exports = () => {
   router.post("/gasto/editar/:url", gastoController.editarGasto);
 
   router.delete("/gasto/eliminar/:url", gastoController.eliminarGasto);
+
+  // Usuario
+  router.get("/crearCuenta", usuarioController.formularioNuevaCuenta);
+  router.post(
+    "/crearCuenta/nuevaCuenta",
+    [
+      // Verificamos los atributos del formulario
+      check("nombre", "El nombre de usuario es requerido.")
+        .not()
+        .isEmpty()
+        .escape(),
+      check("email", "El correo electrónico es requerido.")
+        .not()
+        .isEmpty(),
+      check("email", "El correo electrónico no es válido.")
+        .isEmail()
+        .normalizeEmail()
+    ],
+    usuarioController.agregarUsuario
+  );
 
   return router;
 };

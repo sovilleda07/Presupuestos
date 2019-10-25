@@ -4,7 +4,7 @@
 {{> navbar }}
 
 {{!-- Contenido de la página --}}
-<div class="main-content">
+<div class="main-content bg-default">
     {{!-- Header --}}
     <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
         <div class="container">
@@ -39,42 +39,58 @@
                     {{!-- Card --}}
                     <div class="card-body px-lg-5 py-lg-5">
                         {{!-- Formulario --}}
-                        <form role="form">
+                        <form action="/crearCuenta/nuevaCuenta" method="post">
+                            {{!-- Nombre --}}
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                        <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Nombre" type="text" required>
+                                    <input class="form-control" placeholder="Nombre" type="text" name="nombre" required>
                                 </div>
                             </div>
+                            {{!-- Email --}}
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Correo electrónico" type="email" required>
+                                    <input class="form-control" placeholder="Correo electrónico" type="email"
+                                        name="email" required>
                                 </div>
                             </div>
+                            {{!-- Contraseña --}}
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Contraseña" type="password" required>
+                                    <input class="form-control" placeholder="Contraseña" type="password" name="password"
+                                        required>
                                 </div>
                             </div>
+                            {{!-- Confirmar contraseña --}}
                             <div class="form-group">
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
                                     <input class="form-control" placeholder="Confirmar contraseña" type="password"
-                                        required>
+                                        name="confirmpassword" required>
+                                </div>
+                            </div>
+                            {{!-- Sueldo--}}
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-money-coins"></i></span>
+                                    </div>
+                                    <input class="form-control" type="number" name="sueldo" placeholder="Sueldo"
+                                        step="0.01" min="0" pattern="^[0-9]" required>
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="button" class="btn btn-primary mt-4">Crear cuenta</button>
+                                <input type="submit" value="Crear cuenta" class="btn btn-primary mt-4"></input>
                             </div>
                         </form>
                         {{!-- Formulario --}}
