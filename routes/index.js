@@ -139,5 +139,19 @@ module.exports = () => {
   // Cerrar sesión
   router.get("/cerrarSesion", authController.cerrarSesion);
 
+  // Perfil usuario
+  // Mostrar vista
+  router.get(
+    "/editarPerfil",
+    authController.verificarUsuario,
+    usuarioController.formularioEditarPerfil
+  );
+  // Editar perfil del usuario
+  router.post(
+    "/editarPerfilUsuario",
+    authController.verificarUsuario,
+    usuarioController.editarPerfil
+  );
+
   return router;
 };

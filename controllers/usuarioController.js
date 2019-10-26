@@ -51,6 +51,33 @@ exports.agregarUsuario = async (req, res, next) => {
   }
 };
 
+// Mostrar el formulario de inicio de sesión
 exports.formularioIniciarSesion = (req, res) => {
   res.render("iniciarSesion");
+};
+
+// Mostrar la página y formulario para editar perfil del usuario
+exports.formularioEditarPerfil = (req, res) => {
+  res.render("perfil", {
+    usuario: req.user,
+    nombre: req.user.nombre
+  });
+};
+
+// Almacena los cambios en el perfil del usuario
+exports.editarPerfil = async (req, res) => {
+  // Buscar el usuario
+  const usuario = await Usuario.findById(req.user._id);
+
+  usuario.nombre = req.body.nombre;
+  usuario.email = req.body.email;
+  usuario.sueldo = req.body.sueldo;
+
+  // Guardar los cambios
+  await usuario.save();
+
+  req.flash("Correcto", ["Cambios almacenados correctamente"]);
+
+  // Redireccionar
+  res.redirect("/");
 };
