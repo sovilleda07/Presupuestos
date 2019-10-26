@@ -9,7 +9,8 @@ exports.mostrarCategorias = async (req, res, next) => {
   if (!categoria) return next();
 
   res.render("Categoria", {
-    categoria
+    categoria,
+    nombre: req.user.nombre
   });
 };
 
@@ -36,10 +37,6 @@ exports.mostrarCategoria = async (req, res, next) => {
   } else {
     return res.status(200).send(categoria);
   }
-};
-
-exports.formularioNuevaCategoria = (req, res) => {
-  res.render("nuevaCategoria");
 };
 
 exports.agregarCategoria = async (req, res) => {
@@ -69,7 +66,7 @@ exports.eliminarCategoria = async (req, res) => {
 
   res.redirect("/categoria");
 
-  return res.status(200).send({ resultado: "Exito" });
+  //return res.status(200).send({ resultado: "Exito" });
 };
 
 exports.editarCategoria = async (req, res) => {

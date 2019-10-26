@@ -23,7 +23,10 @@
                                 <h5 class="h3 mb-0">Categorías</h5>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="/categoria/nueva" class="btn btn-neutral">Añadir</a>
+                                <button name="cat-agregar" class="btn btn-neutral" id="btn-agregar-cat">
+                                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                                    <span class="btn-inner--text">Agregar</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -36,8 +39,8 @@
                                 <div class="row align-items-center">
                                     {{!-- Imagen --}}
                                     <div class="col-auto">
-                                        <a href="#" class="avatar rounded-circle">
-                                            <img alt="Image" src="../../assets/img/theme/team-1.jpg">
+                                        <a class="avatar rounded-circle">
+                                            <img alt="Image" src="/img/theme/categoria.png">
                                         </a>
                                     </div>
                                     {{!-- Nombre --}}
@@ -75,6 +78,47 @@
     </div>
 </div>
 
+{{!-- Modal para agregar categoria --}}
+<div class="modal fade" id="modal-agregar-categoria">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar categoría</h4>
+                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <form id="form-agregar" action="/categoria/agregar" method="post">
+                    <div class="form-group row">
+                        <label for="nombre" class="col-md-3 col-form-label form-control-label">Nombre</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="nombre" placeholder="Nombre de categoría"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="exampleFormControlTextarea1">Descripción</label>
+                        <textarea class="form-control" rows="3" name="descripcion" required></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="form-group row">
+                            <input type="submit" value="Agregar" class="btn btn-success align-items-center">
+                            <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                                    class="fa fa-ban"></i> Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+{{!-- Modal para eliminar categoria --}}
 <div class="modal fade" id="modal-delete-categoria">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -106,6 +150,7 @@
     <!-- /.modal-dialog -->
 </div>
 
+{{!-- Modal para editar categoria --}}
 <div class="modal fade" id="modal-editar-categoria">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -126,21 +171,21 @@
 
                     <div class="form-group">
                         <label class="form-control-label" for="exampleFormControlTextarea1">Descripción</label>
-                        <textarea id="txt-descripcion" class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            name="descripcion" required></textarea>
+                        <textarea id="txt-descripcion" class="form-control" rows="3" name="descripcion"
+                            required></textarea>
                     </div>
 
-                    {{!-- <button class="btn btn-primary" type="submit">Crear</button> --}}
+                    <div class="modal-footer">
+                        <div class="form-group row">
+                            <input type="submit" value="Guardar" class="btn btn-success align-items-center">
 
-                    <input type="submit" value="Guardar" class="btn btn-success">
+                            <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
+                                    class="fa fa-ban"></i> Cancelar</button>
+                        </div>
+                    </div>
                 </form>
-                <select class="form-control" id="cbx_categorias"></select>
             </div>
-            <div class="modal-footer">
 
-                <button type="button" id="btn-cancelar" class="btn btn-default" data-dismiss="modal"><i
-                        class="fa fa-ban"></i> Cancelar</button>
-            </div>
         </div>
         <!-- /.modal-content -->
     </div>

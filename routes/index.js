@@ -34,12 +34,6 @@ module.exports = () => {
     authController.verificarUsuario,
     categoriaController.mostrarCategoria
   );
-  // Mostrar formulario para agregar nueva categoria
-  router.get(
-    "/categoria/nueva",
-    authController.verificarUsuario,
-    categoriaController.formularioNuevaCategoria
-  );
 
   // Agregar una categoría
   router.post(

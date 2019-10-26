@@ -28,6 +28,20 @@ $(document).ready(function() {
     }
   });
 
+  // LLamos a la acción click del botón de agregar categoría
+  $("#btn-agregar-cat").click(function() {
+    // Obtenemos cual será la opción a realizar
+    var accion = $(this).attr("name");
+
+    // Dependiendo del botón al que se le hace click
+    // se realizará una acción transmitida por el atributo name
+    // En este caso es la acción de agregar, por lo tanto se desplegará el modal correspondiente
+    if (accion == "cat-agregar") {
+      // Desplegamos el modal
+      $("#modal-agregar-categoria").modal();
+    }
+  });
+
   // $("btn-guardar-cat").click(function() {
   //   let url = "/categoria/editar/" + id_categoria;
   //   $("#form-editar").attr("action", url);
