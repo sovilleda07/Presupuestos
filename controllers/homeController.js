@@ -1,3 +1,5 @@
 exports.mostrarPaginaPrincipal = (req, res) => {
-  res.render("home");
+  res.render("home", {
+    nombre: req.user.nombre
+  });
 };

@@ -8,27 +8,91 @@ const usuarioController = require("../controllers/usuarioController");
 const authController = require("../controllers/authController");
 
 module.exports = () => {
-  // Página principal
-  router.get("/", homeController.mostrarPaginaPrincipal);
+  // ---------------------------DASHBOARD---------------------------
+  router.get(
+    "/",
+    authController.verificarUsuario,
+    homeController.mostrarPaginaPrincipal
+  );
 
-  // Categorias
-  router.get("/categoria", categoriaController.mostrarCategorias);
-  router.get("/categoria/listar", categoriaController.listarCategorias);
-  router.get("/categoria/categoria", categoriaController.mostrarCategoria);
-  router.get("/categoria/nueva", categoriaController.formularioNuevaCategoria);
+  // -----------------------------CATEGORÍAS------------------------
+  // Mostrar información de todas las categorias
+  router.get(
+    "/categoria",
+    authController.verificarUsuario,
+    categoriaController.mostrarCategorias
+  );
+  // Listar categorías para llenar combobox
+  router.get(
+    "/categoria/listar",
+    authController.verificarUsuario,
+    categoriaController.listarCategorias
+  );
+  // Mostrar información de una categoría
+  router.get(
+    "/categoria/categoria",
+    authController.verificarUsuario,
+    categoriaController.mostrarCategoria
+  );
+  // Mostrar formulario para agregar nueva categoria
+  router.get(
+    "/categoria/nueva",
+    authController.verificarUsuario,
+    categoriaController.formularioNuevaCategoria
+  );
 
-  router.post("/categoria/agregar", categoriaController.agregarCategoria);
-  router.post("/categoria/editar/:url", categoriaController.editarCategoria);
-  router.post("/categoria/eliminar", categoriaController.eliminarCategoria);
+  // Agregar una categoría
+  router.post(
+    "/categoria/agregar",
+    authController.verificarUsuario,
+    categoriaController.agregarCategoria
+  );
+  // Editar una categoria
+  router.post(
+    "/categoria/editar/:url",
+    authController.verificarUsuario,
+    categoriaController.editarCategoria
+  );
+  // Eliminar o inhabilitar una categoría
+  router.post(
+    "/categoria/eliminar",
+    authController.verificarUsuario,
+    categoriaController.eliminarCategoria
+  );
 
-  // Gastos
-  router.get("/gasto", gastoController.mostrarGastos);
-  router.get("/gasto/listar", gastoController.listarGastos);
-  router.get("/gasto/listarGasto", gastoController.mostrarGasto);
+  // ----------------------------------GASTOS----------------------------
+  // Mostar todos la vista de los gastos
+  router.get(
+    "/gasto",
+    authController.verificarUsuario,
+    gastoController.mostrarGastos
+  );
+  // Cargar tabla con todos los gatos
+  router.get(
+    "/gasto/listar",
+    authController.verificarUsuario,
+    gastoController.listarGastos
+  );
+  // Cargar información de un gasto para editarlo
+  router.get(
+    "/gasto/listarGasto",
+    authController.verificarUsuario,
+    gastoController.mostrarGasto
+  );
 
-  router.post("/gasto/agregar", gastoController.agregarGasto);
-  router.post("/gasto/editar/:url", gastoController.editarGasto);
-
+  // Agregar un gasto
+  router.post(
+    "/gasto/agregar",
+    authController.verificarUsuario,
+    gastoController.agregarGasto
+  );
+  // Editar un gasto
+  router.post(
+    "/gasto/editar/:url",
+    authController.verificarUsuario,
+    gastoController.editarGasto
+  );
+  // Eliminar un gasto
   router.delete("/gasto/eliminar/:url", gastoController.eliminarGasto);
 
   // Usuario
@@ -71,6 +135,9 @@ module.exports = () => {
   // Iniciar sesión
   router.get("/iniciarSesion", usuarioController.formularioIniciarSesion);
   router.post("/iniciarSesion", authController.autenticarUsuario);
+
+  // Cerrar sesión
+  router.get("/cerrarSesion", authController.cerrarSesion);
 
   return router;
 };

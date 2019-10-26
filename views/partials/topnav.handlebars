@@ -15,11 +15,6 @@
                         </div>
                     </div>
                 </li>
-                {{!-- <li class="nav-item d-sm-none">
-                        <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                            <i class="ni ni-zoom-split-in"></i>
-                        </a>
-                    </li> --}}
             </ul>
             {{!-- Desplegable usuario --}}
             <ul class="navbar-nav align-items-center ml-auto ml-md-0">
@@ -31,7 +26,7 @@
                                 <img alt="Image placeholder" src="/img/theme/team-4.jpg">
                             </span>
                             <div class="media-body ml-2 d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{nombre}}</span>
                             </div>
                         </div>
                     </a>
@@ -44,7 +39,7 @@
                             <span>Cuenta</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#!" class="dropdown-item">
+                        <a href="/cerrarSesion" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
                             <span>Cerrar sesión</span>
                         </a>
