@@ -26,7 +26,7 @@ exports.agregarGasto = async (req, res) => {
 
 // Cargar todos los datos para llenar la tabla de gastos
 exports.listarGastos = async (req, res, next) => {
-  const gasto = await Gasto.find();
+  const gasto = await Gasto.find({ autor: req.user._id });
 
   if (!gasto) {
     return next();

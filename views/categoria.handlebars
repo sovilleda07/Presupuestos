@@ -34,6 +34,7 @@
                     <div class="card-body">
                         {{!-- Lista de categorías  --}}
                         <ul id="lista-cat" class="list-group list-group-flush list my--3">
+                            {{#if categoria.length}}
                             {{#each categoria}}
                             <li class="list-group-item px-0">
                                 <div class="row align-items-center">
@@ -46,7 +47,7 @@
                                     {{!-- Nombre --}}
                                     <div class="col ml--2">
                                         <h4 class="heading mb-0">
-                                            <a href="">{{nombre}}</a>
+                                            <a>{{nombre}}</a>
                                         </h4>
                                         <span class="text-success">●</span>
                                         <small>{{descripcion}}</small>
@@ -70,6 +71,19 @@
                                 </div>
                             </li>
                             {{/each}}
+                            {{else}}
+                            <li class="list-group-item px-0">
+                                <div class="row align-items-center">
+                                    {{!-- Nombre --}}
+                                    <div class="col-auto">
+                                        <h4 class="heading mb-0">
+                                            <a>No existen categorías. ¡Agrega una!</a>
+                                        </h4>
+                                        {{!-- <span class="text-success">●</span> --}}
+                                    </div>
+                                </div>
+                            </li>
+                            {{/if}}
                         </ul>
                     </div>
                 </div>

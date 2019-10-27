@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Categoria = mongoose.model("Categoria");
 
+// Mostrar la vista de las categorías disponibles del usuario
 exports.mostrarCategorias = async (req, res, next) => {
-  const categoria = await Categoria.find({ estado: "1" });
+  const categoria = await Categoria.find({ estado: "1", autor: req.user._id });
   //console.log(categoria);
 
   // Si no hay resultados
@@ -14,8 +15,9 @@ exports.mostrarCategorias = async (req, res, next) => {
   });
 };
 
+// Listar categorías para llenar combobox
 exports.listarCategorias = async (req, res, next) => {
-  const categoria = await Categoria.find({ estado: "1" });
+  const categoria = await Categoria.find({ estado: "1", autor: req.user._id });
   //console.log(categoria);
 
   // Si no hay resultados
@@ -27,6 +29,7 @@ exports.listarCategorias = async (req, res, next) => {
   }
 };
 
+// Mostrar información de una categoría individual
 exports.mostrarCategoria = async (req, res, next) => {
   const categoria = await Categoria.findOne({ url: req.query.url });
   //console.log(req.query);
@@ -39,6 +42,7 @@ exports.mostrarCategoria = async (req, res, next) => {
   }
 };
 
+// Agregar una categoría
 exports.agregarCategoria = async (req, res) => {
   const categoria = new Categoria(req.body);
 
@@ -54,6 +58,7 @@ exports.agregarCategoria = async (req, res) => {
   res.redirect("/categoria");
 };
 
+// Eliminar una categoría
 exports.eliminarCategoria = async (req, res) => {
   const categoriaEditada = req.body;
   //console.log(categoriaEditada);
@@ -69,6 +74,7 @@ exports.eliminarCategoria = async (req, res) => {
   //return res.status(200).send({ resultado: "Exito" });
 };
 
+// Editar una categoría
 exports.editarCategoria = async (req, res) => {
   const categoriaEditada = req.body;
   //console.log(categoriaEditada);
