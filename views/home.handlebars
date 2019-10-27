@@ -11,6 +11,16 @@
     {{!-- Contenido de cada opción dentro del dashboard --}}
     <div class="container-fluid mt-4">
         <div class="row">
+            {{!-- Título --}}
+            <div class="col-xl-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title mb-3 text-center">PRESUPUESTO</h1>
+                        <p class="card-text mb-4 text-center">Maneja tus finanzas de una manera adecuada.
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-gradient-primary border-0">
                     {{!-- Card body --}}
@@ -78,6 +88,232 @@
                                         aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-3 text-center">MOSTRAR PRESUPUESTO</h2>
+                        <div class="row">
+                            {{!-- Categoría --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="example3cols1Input">Categoría</label>
+                                    <select class="form-control" name="categoria" required>
+                                        <option value="" disabled selected>Selecciona una opción</option>
+                                        {{#each lasCategorias}}
+                                        <option value="{{nombre}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            {{!-- Mes --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="example3cols2Input">Mes</label>
+                                    <select class="form-control" id="cbx_mes" name="mes" required>
+                                        <option value="" disabled selected>Selecciona una opción</option>
+                                        <option value="enero">Enero</option>
+                                        <option value="febrero">Febrero</option>
+                                        <option value="marzo">Marzo</option>
+                                        <option value="abril">Abril</option>
+                                        <option value="mayo">Mayo</option>
+                                        <option value="junio">Junio</option>
+                                        <option value="julio">Julio</option>
+                                        <option value="agosto">Agosto</option>
+                                        <option value="septiembre">Septiembre</option>
+                                        <option value="octubre">Octubre</option>
+                                        <option value="noviembre">Noviembre</option>
+                                        <option value="diciembre">Diciembre</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {{!-- Año --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="example3cols3Input">Año</label>
+                                    <select class="form-control" id="cbx_anio" name="anio" required>
+                                        <option value="" disabled selected>Selecciona una opción</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Tabla --}}
+        <div class="card bg-default shadow">
+            <div class="table-responsive py-4">
+                <table id="tablaPresupuesto" class="table align-items-center table-dark table-flush">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Monto (L)</th>
+                            <th>Mes</th>
+                            <th>Año</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-gradient-primary">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title text-uppercase text-muted mb-0 text-white">Sueldo</h3>
+                                <span class="h2 font-weight-bold mb-0 text-white">L.{{sueldo}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                    <i class="ni ni-fat-add"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-gradient-danger">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title text-uppercase text-muted mb-0 text-white">Gastos</h3>
+                                <span class="h2 font-weight-bold mb-0 text-white">{{losGastos}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                    <i class="ni ni-fat-delete"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6">
+                <div class="card bg-gradient-default">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title text-uppercase text-muted mb-0 text-white">Balance</h3>
+                                <span class="h2 font-weight-bold mb-0 text-white">{{elResultado}}</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
+                                    <i class="ni ni-money-coins"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-0 text-sm">
+                            <span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                            <span class="text-nowrap text-light">del sueldo</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="row">
+            {{!-- Lista de los últimos gastos --}}
+            <div class="col-lg-6">
+                <div class="card bg-gradient-default shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0 text-white">Últimos gastos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline timeline-one-side" data-timeline-content="axis"
+                            data-timeline-axis-style="dashed">
+                            {{!-- Cada uno --}}
+                            {{#if losUltimosGastos.length}}
+                            {{#each losUltimosGastos}}
+                            <div class="timeline-block">
+                                <span class="timeline-step badge-success">
+                                    <i class="ni ni-money-coins"></i>
+                                </span>
+                                <div class="timeline-content">
+                                    <small class="text-light font-weight-bold">{{mes}} {{anio}}</small>
+                                    <h4 class="text-white mt-3 mb-0">{{nombre}} <span
+                                            class="text-red mt-3 mb-0">L.{{monto}}</span></h4>
+                                    <p class="text-light text-sm mt-1 mb-0">{{descripcion}}</p>
+                                    <div class="mt-3">
+                                        <span class="badge badge-pill badge-danger">{{categoria}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                            {{else}}
+                            <div class="timeline-block">
+                                <span class="timeline-step badge-success">
+                                    <i class="ni ni-notification-70"></i>
+                                </span>
+                                <div class="timeline-content">
+                                    <h3 class="text-white mt-3 mb-0">Aún no has registrado gastos.</h3>
+                                </div>
+                            </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Lista de las últimas categorías usadas --}}
+            <div class="col-lg-6">
+                <div class="card bg-gradient-default shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0 text-white">Últimas categorías utilizadas</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline timeline-one-side" data-timeline-content="axis"
+                            data-timeline-axis-style="dashed">
+                            {{!-- Cada uno --}}
+                            {{#if losUltimosGastos.length}}
+                            {{#each losUltimosGastos}}
+                            <div class="timeline-block">
+                                <span class="timeline-step badge-success">
+                                    <i class="ni ni-tag"></i>
+                                </span>
+                                <div class="timeline-content">
+                                    <small class="text-light font-weight-bold">{{categoria}}</small>
+                                </div>
+                            </div>
+                            {{/each}}
+                            {{else}}
+                            <div class="timeline-block">
+                                <span class="timeline-step badge-success">
+                                    <i class="ni ni-notification-70"></i>
+                                </span>
+                                <div class="timeline-content">
+                                    <h3 class="text-white mt-3 mb-0">Aún no has registrado gastos.</h3>
+                                </div>
+                            </div>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

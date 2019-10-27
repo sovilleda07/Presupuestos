@@ -15,6 +15,13 @@ module.exports = () => {
     homeController.mostrarPaginaPrincipal
   );
 
+  // Cargar tabla con todos los gatos
+  router.get(
+    "/presupuesto/listar",
+    authController.verificarUsuario,
+    homeController.listarPresupuesto
+  );
+
   // -----------------------------CATEGORÍAS------------------------
   // Mostrar información de todas las categorias
   router.get(

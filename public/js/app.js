@@ -6,6 +6,8 @@ $(document).ready(function() {
   // Llamar a la función para cargar las tablas de los gastos
   cargarTablaGastos();
 
+  cargarTablaPresupuesto();
+
   // Accedemos a los botones de la lista que contiene
   // todas las categorías existentes
   $("#lista-cat").on("click", "button", function() {
@@ -268,6 +270,47 @@ $(document).ready(function() {
       }
     });
   });
+
+  // Función para cargar la tabla con los datos para el presupuesto
+  function cargarTablaPresupuesto() {
+    let url = `${location.origin}/presupuesto/listar`;
+    $.ajax({
+      url: url,
+      success: function(respuesta) {
+        var columns = [
+          {
+            mDataProp: "nombre",
+            className: "text-center"
+          },
+          {
+            mDataProp: "descripcion",
+            className: "text-center"
+          },
+          {
+            mDataProp: "categoria",
+            className: "text-center"
+          },
+          {
+            mDataProp: "monto",
+            className: "text-center"
+          },
+          {
+            mDataProp: "mes",
+            className: "text-center"
+          },
+          {
+            mDataProp: "anio",
+            className: "text-center"
+          }
+        ];
+
+        CargarDataTable("#tablaPresupuesto", respuesta, columns);
+      },
+      error: function() {
+        console.log("No se ha podido obtener la información");
+      }
+    });
+  }
 
   // Función del plugin para cargar los datos
   function CargarDataTable(tableID, data, columns) {
