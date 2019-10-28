@@ -1,7 +1,7 @@
 $(document).ready(function() {
+  // Creación de variables para manejar los id para las transacciones
   var id_categoria = "";
   var id_gasto = "";
-  //alertify.success("hola");
 
   // Llamar a la función para cargar las tablas de los gastos
   cargarTablaGastos();
@@ -17,19 +17,25 @@ $(document).ready(function() {
     var accion = $(this).attr("name");
     id_categoria = url;
 
+    // Si la opcion es de editar
     if (accion == "cat-editar") {
+      //Cargamos las categorias
       getCategoria();
 
+      // Formatemos la url para realizar la petición dependiendo la categoría a editar
       let form_url = "/categoria/editar/" + id_categoria;
 
       $("#form-editar").attr("action", form_url);
+      // Desplegamos el modal
       $("#modal-editar-categoria").modal();
     } else if (accion == "cat-eliminar") {
+      // Obtenemos la url de un input escondido
       $("#contenedor-id").val(url);
       $("#modal-delete-categoria").modal();
     }
   });
 
+  // ------------------------------------------------------- CATEGORÍAS -------------------------------------------------------
   // LLamos a la acción click del botón de agregar categoría
   $("#btn-agregar-cat").click(function() {
     // Obtenemos cual será la opción a realizar
@@ -44,19 +50,15 @@ $(document).ready(function() {
     }
   });
 
-  // $("btn-guardar-cat").click(function() {
-  //   let url = "/categoria/editar/" + id_categoria;
-  //   $("#form-editar").attr("action", url);
-  // });
-
   // Función para obtener la información de las categorías
   // Y colocarla en el formulario en el modal
   function getCategoria() {
+    // Establecmos la url de la petición
     let url = "http://localhost:8000/categoria/categoria?url=" + id_categoria;
     $.ajax({
       url: url,
       success: function(respuesta) {
-        //console.log(respuesta);
+        // Inyectamos los valores a los inputs correspondientes
         $("#txt-nombre").val(respuesta.nombre);
         $("#txt-descripcion").val(respuesta.descripcion);
       },
@@ -72,6 +74,7 @@ $(document).ready(function() {
     $.ajax({
       url: url,
       success: function(respuesta) {
+        // Creación de las columnas que llenaremos
         var columns = [
           {
             mDataProp: "nombre",
@@ -99,6 +102,7 @@ $(document).ready(function() {
           },
           {
             className: "text-center",
+            // Renderizar los botones de editar y eliminar el gasto
             render: function(data, types, full, meta) {
               var editar =
                 '<span data-id="' +
@@ -115,7 +119,10 @@ $(document).ready(function() {
             }
           }
         ];
-
+        // Llamamos a una función para crear la tabla con los siguientes parámetros:
+        // #tablaGastos: nombre en la vista
+        // respuesta: es el JSON que obtenmos de la petición
+        // columns: los encabezados y sus estilos
         CargarDataTable("#tablaGastos", respuesta, columns);
       },
       error: function() {
@@ -215,10 +222,6 @@ $(document).ready(function() {
     });
   }
 
-  // $("#cbx_mes-gasto").change(function() {
-  //   alert($("#cbx_mes-gasto").val());
-  // });
-
   // Función para obtener las categorías existentes y
   // seleccionar la que trae el registro del gasto
   function getComboCategoriaGasto(categoriaSeleccionada) {
@@ -271,17 +274,22 @@ $(document).ready(function() {
     });
   });
 
+  // -------------------------------------------------- FILTRO PRESUPUESTO----------------------------------------
   // Evento click para filtrar y mostrar los presupuestos
   $("#btnFiltrar").click(function() {
+    // Obtenemos los valores que están en seleccionados en los combobox
     let categoria = $("#cbx_categoria").val();
     let mes = $("#cbx_mes").val();
     let anio = $("#cbx_anio").val();
 
+    // Creamos la url con los parámetros
     let url = `${location.origin}/presupuesto/listar?categoria=${categoria}&mes=${mes}&anio=${anio}`;
 
+    // Realizamos la petición
     $.ajax({
       url: url,
       success: function(respuesta) {
+        // Construcción de las tablas
         var columns = [
           {
             mDataProp: "nombre",
@@ -309,7 +317,6 @@ $(document).ready(function() {
           }
         ];
 
-        //CargarDataTable("#tablaPresupuesto", respuesta, columns);
         // Ahora hay que enviar respuesta.gasto porque es un JSON de dos valores,
         // 1. gasto: es un array
         // 2. total: que es un numero
@@ -317,6 +324,7 @@ $(document).ready(function() {
         CargarDataTable("#tablaPresupuesto", respuesta.gasto, columns);
 
         //alert(respuesta.total);
+        // Formateamos el texto con el total de los gastos filtrados
         $("#total-gastos").text("L. " + respuesta.total.toFixed(2));
         let sueldo = parseFloat(
           $("#txt_sueldo")
@@ -324,10 +332,12 @@ $(document).ready(function() {
             .replace("L.", "")
         );
 
+        // Cálculo del balance
         let restante = sueldo - respuesta.total;
 
         $("#total_restante").text("L. " + restante.toFixed(2));
 
+        // Cálculo del procentaje del sueldo disponible o faltante
         let analisis = "";
         let porcentil = (restante / sueldo) * 100;
 
