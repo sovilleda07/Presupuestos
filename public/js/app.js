@@ -6,7 +6,7 @@ $(document).ready(function() {
   // Llamar a la función para cargar las tablas de los gastos
   cargarTablaGastos();
 
-  cargarTablaPresupuesto();
+  //cargarTablaPresupuesto();
 
   // Accedemos a los botones de la lista que contiene
   // todas las categorías existentes
@@ -271,9 +271,14 @@ $(document).ready(function() {
     });
   });
 
-  // Función para cargar la tabla con los datos para el presupuesto
-  function cargarTablaPresupuesto() {
-    let url = `${location.origin}/presupuesto/listar`;
+  // Evento click para filtrar y mostrar los presupuestos
+  $("#btnFiltrar").click(function() {
+    let categoria = $("#cbx_categoria").val();
+    let mes = $("#cbx_mes").val();
+    let anio = $("#cbx_anio").val();
+
+    let url = `${location.origin}/presupuesto/listar?categoria=${categoria}&mes=${mes}&anio=${anio}`;
+
     $.ajax({
       url: url,
       success: function(respuesta) {
@@ -304,13 +309,46 @@ $(document).ready(function() {
           }
         ];
 
-        CargarDataTable("#tablaPresupuesto", respuesta, columns);
-      },
-      error: function() {
-        console.log("No se ha podido obtener la información");
+        //CargarDataTable("#tablaPresupuesto", respuesta, columns);
+        // Ahora hay que enviar respuesta.gasto porque es un JSON de dos valores,
+        // 1. gasto: es un array
+        // 2. total: que es un numero
+
+        CargarDataTable("#tablaPresupuesto", respuesta.gasto, columns);
+
+        //alert(respuesta.total);
+        $("#total-gastos").text("L. " + respuesta.total.toFixed(2));
+        let sueldo = parseFloat(
+          $("#txt_sueldo")
+            .text()
+            .replace("L.", "")
+        );
+
+        let restante = sueldo - respuesta.total;
+
+        $("#total_restante").text("L. " + restante.toFixed(2));
+
+        let analisis = "";
+        let porcentil = (restante / sueldo) * 100;
+
+        if (restante > 0) {
+          analisis =
+            '<span id="porcentaje" class="text-green mr-2"><i class="fa fa-arrow-up"></i> ' +
+            porcentil +
+            " %</span>" +
+            '<span class="text-nowrap text-light">del sueldo</span>';
+        } else {
+          analisis =
+            '<span id="porcentaje" class="text-red mr-2"><i class="fa fa-arrow-down"></i> ' +
+            porcentil +
+            " %</span>" +
+            '<span class="text-nowrap text-light">del sueldo</span>';
+        }
+
+        $("#analisis").html(analisis);
       }
     });
-  }
+  });
 
   // Función del plugin para cargar los datos
   function CargarDataTable(tableID, data, columns) {

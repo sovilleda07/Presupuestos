@@ -24,14 +24,35 @@ exports.mostrarPaginaPrincipal = async (req, res, next) => {
 
 // Cargar todos los datos para llenar la tabla de gastos
 exports.listarPresupuesto = async (req, res, next) => {
-  const gasto = await Gasto.find({
-    categoria: "Universidad",
-    autor: req.user._id
-  });
+  var parametros = req.query;
+
+  var filtro = {};
+
+  if (parametros.categoria !== "0") {
+    filtro.categoria = parametros.categoria;
+  }
+
+  if (parametros.mes !== "0") {
+    filtro.mes = parametros.mes;
+  }
+
+  if (parametros.anio !== "0") {
+    filtro.anio = parametros.anio;
+  }
+
+  filtro.autor = req.user._id;
+
+  const gasto = await Gasto.find(filtro);
+
+  var totalFiltro = 0;
+  for (elGasto in gasto) {
+    totalFiltro += gasto[elGasto].monto;
+  }
 
   if (!gasto) {
     return next();
   } else {
-    return res.status(200).send(gasto);
+    //gasto.total = totalFiltro;
+    return res.status(200).send({ gasto: gasto, total: totalFiltro });
   }
 };
