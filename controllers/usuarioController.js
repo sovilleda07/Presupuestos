@@ -60,7 +60,8 @@ exports.formularioIniciarSesion = (req, res) => {
 exports.formularioEditarPerfil = (req, res) => {
   res.render("perfil", {
     usuario: req.user,
-    nombre: req.user.nombre
+    nombre: req.user.nombre,
+    sueldo: req.user.sueldo
   });
 };
 

@@ -154,5 +154,8 @@ module.exports = () => {
     usuarioController.editarPerfil
   );
 
+  // Mostrar vista de Nosotros
+  router.get("/nosotros", homeController.mostrarNosotros);
+
   return router;
 };

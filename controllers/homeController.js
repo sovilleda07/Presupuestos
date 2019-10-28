@@ -56,3 +56,7 @@ exports.listarPresupuesto = async (req, res, next) => {
     return res.status(200).send({ gasto: gasto, total: totalFiltro });
   }
 };
+
+exports.mostrarNosotros = (req, res) => {
+  res.render("nosotros");
+};
