@@ -154,6 +154,25 @@ module.exports = () => {
     usuarioController.editarPerfil
   );
 
+  // Restablecer la contraseña del usuario
+  router.get(
+    "/restablecerPassword",
+    authController.formularioRestablecerPassword
+  );
+  router.post("/restablecerPassword", authController.enviarToken);
+
+  // Mostrar vista para reset password
+  router.get(
+    "/restablecerPassword/:token",
+    authController.formularioNuevoPassword
+  );
+
+  // Almacenar la nueva contraseña
+  router.post(
+    "/restablecerPassword/:token",
+    authController.almacenarNuevaPassword
+  );
+
   // Mostrar vista de Nosotros
   router.get("/nosotros", homeController.mostrarNosotros);
 
