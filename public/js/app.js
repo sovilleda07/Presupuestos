@@ -54,7 +54,7 @@ $(document).ready(function() {
   // Y colocarla en el formulario en el modal
   function getCategoria() {
     // Establecmos la url de la petición
-    let url = "http://localhost:8000/categoria/categoria?url=" + id_categoria;
+    let url = `${location.origin}/categoria/categoria?url=${id_categoria}`;
     $.ajax({
       url: url,
       success: function(respuesta) {
@@ -258,7 +258,7 @@ $(document).ready(function() {
 
   // Acción del boton eliminar para realizar la petición
   $("#btn-gasto-eliminar").click(function() {
-    let url = "http://localhost:8000/gasto/eliminar/" + id_gasto;
+    let url = `${location.origin}/gasto/eliminar/${id_gasto}`;
     $.ajax({
       url: url,
       // indicamos el tipo de petición
