@@ -39,12 +39,9 @@
     {{{body}}}
 
     {{#if messages}}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <span class="alert-icon"><i class="ni ni-bell-55"></i></span>
-        {{#mostrarAlertas messages}}
-        {{/mostrarAlertas}}
-        {{/if}}
-    </div>
+    {{#mostrarAlertas messages}}
+    {{/mostrarAlertas}}
+    {{/if}}
 
 
     {{!-- Argon Scripts --}}

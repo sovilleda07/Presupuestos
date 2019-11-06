@@ -18,7 +18,7 @@ exports.cerrarSesion = (req, res) => {
   // Cierra la sesión actual
   req.logout();
 
-  req.flash("correcto", [
+  req.flash("success", [
     "Has cerrado tu sesión correctamente. ¡Vuelve pronto!"
   ]);
 
@@ -48,7 +48,7 @@ exports.enviarToken = async (req, res) => {
 
   // Si el usuario no existe
   if (!usuario) {
-    req.flash("error", ["El correo electrónico ingresado no existe"]);
+    req.flash("danger", ["El correo electrónico ingresado no existe"]);
     return res.redirect("restablecerPassword");
   }
 
@@ -71,7 +71,7 @@ exports.enviarToken = async (req, res) => {
   });
 
   // Redireccionar
-  req.flash("correcto", [
+  req.flash("success", [
     "Verifica tu correo electrónico para seguir las instrucciones"
   ]);
   res.redirect("/iniciarSesion");
@@ -87,7 +87,7 @@ exports.formularioNuevoPassword = async (req, res) => {
 
   // No se pudo encontrar el usuario con el token o token vencido
   if (!usuario) {
-    req.flash("error", [
+    req.flash("danger", [
       "Solicitud expirada. Vuelve a solicitar el cambio de contraseña"
     ]);
     return res.redirect("/restablecerPassword");
@@ -107,7 +107,7 @@ exports.almacenarNuevaPassword = async (req, res) => {
 
   // No se pudo encontrar el usuario con el token o token vencido
   if (!usuario) {
-    req.flash("error", [
+    req.flash("danger", [
       "Solicitud expirada. Vuelve a solicitar el cambio de contraseña"
     ]);
     return res.redirect("/restablecerPassword");
@@ -123,6 +123,6 @@ exports.almacenarNuevaPassword = async (req, res) => {
   await usuario.save();
 
   // Redireccionar
-  req.flash("correcto", ["Contraseña modificada correctamente"]);
+  req.flash("success", ["Contraseña modificada correctamente"]);
   res.redirect("/iniciarSesion");
 };

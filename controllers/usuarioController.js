@@ -20,7 +20,7 @@ exports.agregarUsuario = async (req, res, next) => {
     errores.array().map(error => erroresArray.push(error.msg));
 
     // Enviar los errores de regreso al usuario
-    req.flash("error", erroresArray);
+    req.flash("danger", erroresArray);
 
     res.render("crearCuenta", {
       messages: req.flash()
@@ -42,7 +42,7 @@ exports.agregarUsuario = async (req, res, next) => {
   } catch (error) {
     // Ingresar el error al arreglo de errores
     erroresArray.push(error);
-    req.flash("error", erroresArray);
+    req.flash("danger", erroresArray);
 
     // Rendizar la página con los errores
     res.render("crearCuenta", {
@@ -77,7 +77,7 @@ exports.editarPerfil = async (req, res) => {
   // Guardar los cambios
   await usuario.save();
 
-  req.flash("Correcto", ["Cambios almacenados correctamente"]);
+  req.flash("success", ["Cambios almacenados correctamente"]);
 
   // Redireccionar
   res.redirect("/");
