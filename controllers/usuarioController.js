@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Usuario = mongoose.model("Usuario");
 const { validationResult } = require("express-validator");
+const multer = require("multer");
+const shortid = require("shortid");
 
 // Carga el formulario para la creación de una cuenta de usuario
 exports.formularioNuevaCuenta = (req, res) => {
@@ -61,7 +63,8 @@ exports.formularioEditarPerfil = (req, res) => {
   res.render("perfil", {
     usuario: req.user,
     nombre: req.user.nombre,
-    sueldo: req.user.sueldo
+    sueldo: req.user.sueldo,
+    imagen: req.user.imagen
   });
 };
 
@@ -74,6 +77,11 @@ exports.editarPerfil = async (req, res) => {
   usuario.email = req.body.email;
   usuario.sueldo = req.body.sueldo;
 
+  // Verificar si el usuario agrega una imagen
+  if (req.file) {
+    usuario.imagen = req.file.filename;
+  }
+
   // Guardar los cambios
   await usuario.save();
 
@@ -82,3 +90,59 @@ exports.editarPerfil = async (req, res) => {
   // Redireccionar
   res.redirect("/");
 };
+
+// Subir una imagen al servidor
+exports.subirImagen = (req, res, next) => {
+  upload(req, res, function(error) {
+    if (error) {
+      // Errores de multer
+      if (error instanceof multer.MulterError) {
+        if (error.code === "LIMIT_FILE_SIZE") {
+          req.flash("danger", [
+            "El tamaño del archivo es demasiado grande. Máximo 200Kb"
+          ]);
+        } else {
+          req.flash("danger", [error.message]);
+        }
+      } else {
+        // Errores del usuario
+        req.flash("danger", [error.message]);
+      }
+      // Redireccionar
+      res.redirect("/");
+      return;
+    } else {
+      return next();
+    }
+  });
+};
+
+// Opciones de configuración de Multer
+const configuracionMulter = {
+  // Tamaño máximo del archivo en bytes
+  limits: {
+    fileSize: 200000
+  },
+  // Donde se almacena la imagen
+  storage: (fileStorage = multer.diskStorage({
+    destination: (req, res, cb) => {
+      cb(null, __dirname + "../../public/uploads/perfiles");
+    },
+    filename: (req, file, cb) => {
+      const extension = file.mimetype.split("/")[1];
+      cb(null, `${shortid.generate()}.${extension}`);
+    }
+  })),
+  // Verificar que es una imagen válida mediante mimetype
+  fileFilter(req, file, cb) {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+      // El callback se ejecuta como true o false
+      // se retorna true cuando se acepta la imagen
+      cb(null, true);
+    } else {
+      cb(new Error("Formato de archivo no válido. Solo JPEG o PNG."), false);
+    }
+  }
+};
+
+const upload = multer(configuracionMulter).single("imagen");

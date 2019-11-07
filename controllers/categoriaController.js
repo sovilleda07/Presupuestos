@@ -11,7 +11,8 @@ exports.mostrarCategorias = async (req, res, next) => {
 
   res.render("Categoria", {
     categoria,
-    nombre: req.user.nombre
+    nombre: req.user.nombre,
+    imagen: req.user.imagen
   });
 };
 

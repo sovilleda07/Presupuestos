@@ -32,7 +32,8 @@ const usuarioSchema = new mongoose.Schema({
     lowercase: true
   },
   token: String,
-  expira: Date
+  expira: Date,
+  imagen: String
 });
 
 // Middleware para crear url

@@ -17,6 +17,7 @@ exports.mostrarPaginaPrincipal = async (req, res, next) => {
   res.render("home", {
     nombre: req.user.nombre,
     sueldo: req.user.sueldo,
+    imagen: req.user.imagen,
     lasCategorias,
     losUltimosGastos
   });

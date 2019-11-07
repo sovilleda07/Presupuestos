@@ -151,6 +151,7 @@ module.exports = () => {
   router.post(
     "/editarPerfilUsuario",
     authController.verificarUsuario,
+    usuarioController.subirImagen,
     usuarioController.editarPerfil
   );
 
