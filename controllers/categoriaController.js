@@ -9,7 +9,7 @@ exports.mostrarCategorias = async (req, res, next) => {
   // Si no hay resultados
   if (!categoria) return next();
 
-  res.render("Categoria", {
+  res.render("categoria", {
     categoria,
     nombre: req.user.nombre,
     imagen: req.user.imagen
