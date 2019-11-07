@@ -207,7 +207,7 @@ $(document).ready(function() {
     $.ajax({
       url: url,
       success: function(respuesta) {
-        console.log(respuesta);
+        // console.log(respuesta);
         // Enviar a función el nombre de la categoría para seleccionarla
         getComboCategoriaGasto(respuesta.categoria);
         $("#txt-gasto-nombre").val(respuesta.nombre);
