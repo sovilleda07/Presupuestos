@@ -3,7 +3,7 @@ const Gasto = mongoose.model("Gasto");
 
 // Mostrar la página de gastos
 exports.mostrarGastos = async (req, res, next) => {
-  res.render("Gasto", {
+  res.render("gasto", {
     nombre: req.user.nombre,
     imagen: req.user.imagen
   });
